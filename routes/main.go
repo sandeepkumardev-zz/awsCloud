@@ -17,6 +17,7 @@ func RouterSetup() *gin.Engine {
 	prefix := router.Group("/" + apiPrefix + "/" + apiVersion)
 	// user api routes
 	userRoutes(prefix)
+	bucketRoutes(prefix)
 
 	return router
 }
