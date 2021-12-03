@@ -15,7 +15,7 @@ import (
 func GetItem(user *models.User) (res map[string]interface{}, err error) {
 	var resp []map[string]interface{}
 
-	out, err := config.Client.Scan(context.TODO(), &dynamodb.ScanInput{
+	out, err := config.DB_client.Scan(context.TODO(), &dynamodb.ScanInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
 	})
 	if err != nil {
@@ -54,7 +54,7 @@ func PutItem(user *models.User) error {
 		return fmt.Errorf("something went wrong")
 	}
 
-	_, dberr := config.Client.PutItem(context.TODO(), &dynamodb.PutItemInput{
+	_, dberr := config.DB_client.PutItem(context.TODO(), &dynamodb.PutItemInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
 		Item:      data,
 	})

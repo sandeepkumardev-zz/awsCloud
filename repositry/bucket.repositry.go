@@ -24,7 +24,7 @@ func CreateBucket(bucketName string) error {
 		Bucket: bucket,
 	}
 
-	_, err := MakeBucket(context.TODO(), config.S3client, input)
+	_, err := MakeBucket(context.TODO(), config.S3_client, input)
 
 	return err
 }

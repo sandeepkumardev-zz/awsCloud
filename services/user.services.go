@@ -58,7 +58,7 @@ func CreateUser(user *models.User) (res Response, status int) {
 	user.Password = string(hash)
 
 	// createing new bucket
-	BucketErr := repositry.CreateBucket(user.Username + "sBucket")
+	BucketErr := repositry.CreateBucket(user.Username + user.Id + "sBucket")
 	if BucketErr != nil {
 		return Response{Success: false, Message: BucketErr.Error(), Data: nil}, 400
 	}
