@@ -7,9 +7,11 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
 
 var Client *dynamodb.Client
+var S3client *s3.Client
 
 func ConnectionDB() (*dynamodb.Client, error) {
 	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(os.Getenv("AWS_REGION")))
@@ -17,6 +19,12 @@ func ConnectionDB() (*dynamodb.Client, error) {
 		return nil, err
 	}
 
+	bcfg, berr := config.LoadDefaultConfig(context.TODO(), config.WithRegion(os.Getenv("AWS_REGION")))
+	if berr != nil {
+		panic("configuration error, " + err.Error())
+	}
+
+	S3client = s3.NewFromConfig(bcfg)
 	Client = dynamodb.NewFromConfig(cfg)
 
 	var tableName = os.Getenv("TABLE_NAME")

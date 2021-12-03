@@ -39,7 +39,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.4.4
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.8.1 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.5.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.5.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.6.1 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.11.0 // indirect
 )
@@ -47,7 +47,13 @@ require (
 require (
 	github.com/aws/aws-sdk-go v1.42.17
 	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.8.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/s3 v1.21.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gofrs/uuid v4.2.0+incompatible
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
+)
+
+require (
+	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.0.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.9.2 // indirect
 )
