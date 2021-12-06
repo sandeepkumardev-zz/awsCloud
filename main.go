@@ -4,7 +4,6 @@ import (
 	"awsCloud/config"
 	"awsCloud/routes"
 	"fmt"
-	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -26,5 +25,5 @@ func main() {
 
 	// start server
 	router := routes.RouterSetup()
-	router.Run(":" + os.Getenv("PORT"))
+	router.Run(":" + config.PORT)
 }

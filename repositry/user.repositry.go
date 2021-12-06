@@ -5,7 +5,6 @@ import (
 	"awsCloud/models"
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
@@ -16,7 +15,7 @@ func GetItem(user *models.User) (res map[string]interface{}, err error) {
 	var resp []map[string]interface{}
 
 	out, err := config.DB_client.Scan(context.TODO(), &dynamodb.ScanInput{
-		TableName: aws.String(os.Getenv("TABLE_NAME")),
+		TableName: aws.String(config.TABLE_NAME),
 	})
 	if err != nil {
 		return nil, fmt.Errorf("something went wrong")
@@ -55,7 +54,7 @@ func PutItem(user *models.User) error {
 	}
 
 	_, dberr := config.DB_client.PutItem(context.TODO(), &dynamodb.PutItemInput{
-		TableName: aws.String(os.Getenv("TABLE_NAME")),
+		TableName: aws.String(config.TABLE_NAME),
 		Item:      data,
 	})
 
@@ -63,7 +62,7 @@ func PutItem(user *models.User) error {
 }
 
 // data, err := config.Client.Query(context.TODO(), &dynamodb.QueryInput{
-// 	TableName:              aws.String(os.Getenv("TABLE_NAME")),
+// 	TableName:              aws.String(config.TABLE_NAME),
 // 	IndexName:              aws.String("username"),
 // 	KeyConditionExpression: aws.String("username = :username"),
 // 	ExpressionAttributeValues: map[string]types.AttributeValue{
@@ -80,7 +79,7 @@ func PutItem(user *models.User) error {
 // fmt.Println(data)
 
 // data, err := config.Client.GetItem(context.TODO(), &dynamodb.GetItemInput{
-// 	TableName: aws.String(os.Getenv("TABLE_NAME")),
+// 	TableName: aws.String(config.TABLE_NAME),
 // 	Key: map[string]types.AttributeValue{
 // 		"username": &types.AttributeValueMemberS{Value: user.Username},
 // 	},

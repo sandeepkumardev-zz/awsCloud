@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"os"
+	"awsCloud/config"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,12 +9,7 @@ import (
 func RouterSetup() *gin.Engine {
 	router := gin.Default()
 
-	// Api Prefix
-	apiPrefix := os.Getenv("API_PREFIX")
-	// version 1
-	apiVersion := os.Getenv("API_VERSION")
-
-	prefix := router.Group("/" + apiPrefix + "/" + apiVersion)
+	prefix := router.Group("/" + config.API_PREFIX + "/" + config.API_VERSION)
 	// user api routes
 	userRoutes(prefix)
 	bucketRoutes(prefix)
