@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"awsCloud/config"
 	"awsCloud/models"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -11,6 +11,8 @@ import (
 )
 
 var td = &models.TokenDetails{}
+var ACCESS_SECRET = os.Getenv("ACCESS_SECRET")
+var REFRESH_SECRET = os.Getenv("REFRESH_SECRET")
 
 func CreateToken(username string) (*models.TokenDetails, error) {
 	// min, _ := str2duration.ParseDuration(os.Getenv("EXPIRE_ACCESS_SECRET"))
@@ -24,7 +26,7 @@ func CreateToken(username string) (*models.TokenDetails, error) {
 	atClaims["username"] = username
 	atClaims["authorized"] = true
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
-	td.AccessToken, err = at.SignedString([]byte(config.ACCESS_SECRET))
+	td.AccessToken, err = at.SignedString([]byte(ACCESS_SECRET))
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +37,7 @@ func CreateToken(username string) (*models.TokenDetails, error) {
 	rtClaims["username"] = username
 	rtClaims["authorized"] = true
 	rt := jwt.NewWithClaims(jwt.SigningMethodHS256, rtClaims)
-	td.RefreshToken, err = rt.SignedString([]byte(config.REFRESH_SECRET))
+	td.RefreshToken, err = rt.SignedString([]byte(REFRESH_SECRET))
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +62,7 @@ func verifyToken(data string, secret []byte) (*jwt.Token, string) {
 
 func VerifyAccessToken(ctx *gin.Context) (jwt.Claims, string) {
 	if data := ctx.Request.Header.Get("Authorization"); data != "" {
-		token, err := verifyToken(data, []byte(config.ACCESS_SECRET))
+		token, err := verifyToken(data, []byte(ACCESS_SECRET))
 		if err != "" {
 			return nil, err
 		}

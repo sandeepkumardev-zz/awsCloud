@@ -24,6 +24,7 @@ func main() {
 	}
 
 	// start server
+	var port = config.GetEnvVar().PORT
 	router := routes.RouterSetup()
-	router.Run(":" + config.PORT)
+	router.Run(":" + port)
 }

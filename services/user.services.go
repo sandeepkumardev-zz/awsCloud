@@ -8,6 +8,7 @@ import (
 
 	uuid "github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"
+	// splitString "github.com/sandeepkumardev/go-package"
 )
 
 type Response models.Response
@@ -57,8 +58,11 @@ func CreateUser(user *models.User) (res Response, status int) {
 	user.Id = newId.String()
 	user.Password = string(hash)
 
+	// u := splitString(user.Username, " ")
+	bucketName := user.Username + "-buckets-" + user.Id
+	fmt.Println(bucketName)
 	// createing new bucket
-	BucketErr := repositry.CreateBucket(user.Username + user.Id + "sBucket")
+	_, BucketErr := repositry.CreateBucket(bucketName)
 	if BucketErr != nil {
 		return Response{Success: false, Message: BucketErr.Error(), Data: nil}, 400
 	}
