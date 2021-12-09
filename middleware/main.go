@@ -12,7 +12,7 @@ func VerifyUser() gin.HandlerFunc {
 		//verify Token
 		_, err := utils.VerifyAccessToken(c)
 		if err != "" {
-			c.JSON(200, models.Response{Success: true, Message: err, Data: nil})
+			c.JSON(401, models.Response{Success: true, Message: err, Data: nil})
 			c.Abort()
 		}
 		c.Next()

@@ -20,7 +20,7 @@ func main() {
 	// stabling the database
 	_, dbErr := config.ConnectionDB()
 	if dbErr != nil {
-		panic("Error in stabling database connection")
+		panic("Error in stabling database connection: " + dbErr.Error())
 	}
 
 	// start server

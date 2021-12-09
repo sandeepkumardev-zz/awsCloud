@@ -3,6 +3,7 @@ package repositry
 import (
 	"awsCloud/config"
 	"fmt"
+	"mime/multipart"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -32,4 +33,24 @@ func CreateBucket(bucketName string) (resp *s3.CreateBucketOutput, err error) {
 		}
 	}
 	return resp, nil
+}
+
+func UploadObject(bucketName string, file multipart.File, fileName string) error {
+	fmt.Println("Uploading:", fileName)
+	_, err := config.S3session.PutObject(&s3.PutObjectInput{
+		Body:   file,
+		Bucket: aws.String(bucketName),
+		Key:    aws.String(fileName),
+		ACL:    aws.String(s3.BucketCannedACLPublicRead),
+	})
+
+	return err
+}
+
+func GetAllObjects(bucketName string) (*s3.ListObjectsV2Output, error) {
+	resp, err := config.S3session.ListObjectsV2(&s3.ListObjectsV2Input{
+		Bucket: aws.String(bucketName),
+	})
+
+	return resp, err
 }

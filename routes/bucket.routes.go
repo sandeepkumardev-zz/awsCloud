@@ -9,4 +9,5 @@ import (
 
 func bucketRoutes(router *gin.RouterGroup) {
 	router.POST("upload", middleware.VerifyUser(), ctrl.UploadItem)
+	router.POST("itemlist", middleware.VerifyUser(), ctrl.GetAllItem)
 }
