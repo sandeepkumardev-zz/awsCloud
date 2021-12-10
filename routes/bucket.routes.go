@@ -8,6 +8,9 @@ import (
 )
 
 func bucketRoutes(router *gin.RouterGroup) {
-	router.POST("upload", middleware.VerifyUser(), ctrl.UploadItem)
-	router.POST("itemlist", middleware.VerifyUser(), ctrl.GetAllItem)
+	auth := router.Group("/auth", middleware.VerifyUser())
+
+	auth.POST("create-bucket", ctrl.CraeteBucket)
+	auth.POST("upload", ctrl.UploadItem)
+	auth.POST("itemlist", ctrl.GetAllItem)
 }
