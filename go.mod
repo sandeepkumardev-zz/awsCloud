@@ -57,4 +57,5 @@ require (
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.0.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.9.2 // indirect
 	github.com/sandeepkumardev/go-package v0.0.0-20211020131807-ae6dfdc849a8
+	github.com/xhit/go-str2duration/v2 v2.0.0
 )
