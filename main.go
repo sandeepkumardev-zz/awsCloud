@@ -4,18 +4,17 @@ import (
 	"awsCloud/config"
 	"awsCloud/routes"
 	"fmt"
-
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
 func main() {
 	fmt.Println("AWS cloud storage ...")
 
 	// load environment variables
-	err := godotenv.Load(".env")
-	if err != nil {
-		fmt.Println("Error loading environment variables.")
-	}
+	// err := godotenv.Load(".env")
+	// if err != nil {
+	// 	fmt.Println("Error loading environment variables.")
+	// }
 
 	// stabling the database
 	_, dbErr := config.ConnectionDB()
