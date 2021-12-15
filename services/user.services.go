@@ -6,6 +6,7 @@ import (
 	"awsCloud/utils"
 	"fmt"
 	"strings"
+	"time"
 
 	uuid "github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"
@@ -27,10 +28,14 @@ func VerifyUser(user *models.User) (res Response, status int) {
 	if err != nil {
 		return Response{Message: "Something went wrong!", Data: nil, Success: false}, 500
 	}
-
+	// calculate time for expire token
+	AtExpiresTime := time.Unix(token.AtExpires, 0).String()
+	RtExpiresTime := time.Unix(token.RtExpires, 0).String()
 	tokens := map[string]string{
-		"access_token":  token.AccessToken,
-		"refresh_token": token.RefreshToken,
+		"access_token":              token.AccessToken,
+		"refresh_token":             token.RefreshToken,
+		"access_token_expire_time":  AtExpiresTime,
+		"refresh_token_expire_time": RtExpiresTime,
 	}
 
 	return Response{Success: true, Message: "SignIn successful!", Data: tokens}, 200
