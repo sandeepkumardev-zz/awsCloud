@@ -58,3 +58,36 @@ func GetAllItem(ctx *gin.Context) (res Response, status int) {
 
 	return Response{Success: true, Message: "Successfully fetched", Data: resp.Contents}, 200
 }
+
+// func GetObject(filename string) {
+// 	fmt.Println("Downloading: ", filename)
+
+// 	resp, err := s3session.GetObject(&s3.GetObjectInput{
+// 		Bucket: aws.String(BUCKET_NAME),
+// 		Key:    aws.String(filename),
+// 	})
+
+// 	if err != nil {
+// 		panic(err)
+// 	}
+
+// 	body, _ := ioutil.ReadAll(resp.Body)
+// 	err = ioutil.WriteFile(filename, body, 0644)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// }
+
+// func DeleteObject(filename string) (resp *s3.DeleteObjectOutput) {
+// 	fmt.Println("Deleting: ", filename)
+// 	resp, err := s3session.DeleteObject(&s3.DeleteObjectInput{
+// 		Bucket: aws.String(BUCKET_NAME),
+// 		Key:    aws.String(filename),
+// 	})
+
+// 	if err != nil {
+// 		panic(err)
+// 	}
+
+// 	return resp
+// }
