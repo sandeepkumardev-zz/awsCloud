@@ -12,5 +12,5 @@ func bucketRoutes(router *gin.RouterGroup) {
 
 	auth.POST("create-bucket", ctrl.CraeteBucket)
 	auth.POST("upload", ctrl.UploadItem)
-	auth.POST("itemlist", ctrl.GetAllItem)
+	auth.GET("items", ctrl.Items)
 }
