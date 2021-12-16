@@ -1,9 +1,9 @@
 package services
 
 import (
-	"awsCloud/models"
-	"awsCloud/repositry"
-	"awsCloud/utils"
+	"awsCloud/database/models"
+	"awsCloud/http/repositry"
+	"awsCloud/http/utils"
 	"fmt"
 	"strings"
 	"time"

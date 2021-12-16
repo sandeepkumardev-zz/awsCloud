@@ -1,7 +1,7 @@
 package routes
 
 import (
-	ctrl "awsCloud/controller"
+	ctrl "awsCloud/http/controller"
 
 	"github.com/gin-gonic/gin"
 )

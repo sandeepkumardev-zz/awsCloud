@@ -1,8 +1,8 @@
 package main
 
 import (
-	"awsCloud/config"
-	"awsCloud/routes"
+	"awsCloud/database/config"
+	"awsCloud/http/routes"
 	"fmt"
 
 	"github.com/joho/godotenv"

@@ -1,7 +1,7 @@
 package repositry
 
 import (
-	"awsCloud/config"
+	"awsCloud/database/config"
 	"fmt"
 	"mime/multipart"
 	"os"

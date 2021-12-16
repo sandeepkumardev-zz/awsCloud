@@ -1,8 +1,8 @@
 package repositry
 
 import (
-	"awsCloud/config"
-	"awsCloud/models"
+	"awsCloud/database/config"
+	"awsCloud/database/models"
 	"context"
 	"fmt"
 	"os"

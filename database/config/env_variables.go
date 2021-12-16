@@ -1,7 +1,7 @@
 package config
 
 import (
-	"awsCloud/models"
+	"awsCloud/database/models"
 	"os"
 )
 

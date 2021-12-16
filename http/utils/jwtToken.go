@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"awsCloud/models"
+	"awsCloud/database/models"
 	"fmt"
 	"os"
 	"time"

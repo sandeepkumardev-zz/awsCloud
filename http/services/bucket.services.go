@@ -1,8 +1,8 @@
 package services
 
 import (
-	"awsCloud/repositry"
-	"awsCloud/utils"
+	"awsCloud/http/repositry"
+	"awsCloud/http/utils"
 
 	"github.com/gin-gonic/gin"
 )

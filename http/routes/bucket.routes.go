@@ -1,8 +1,8 @@
 package routes
 
 import (
-	ctrl "awsCloud/controller"
-	"awsCloud/middleware"
+	ctrl "awsCloud/http/controller"
+	"awsCloud/http/middleware"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"awsCloud/services"
+	"awsCloud/http/services"
 
 	"github.com/gin-gonic/gin"
 )

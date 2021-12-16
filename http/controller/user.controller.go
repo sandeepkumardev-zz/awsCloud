@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"awsCloud/models"
-	"awsCloud/services"
+	"awsCloud/database/models"
+	"awsCloud/http/services"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

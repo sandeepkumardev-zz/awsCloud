@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"awsCloud/models"
-	"awsCloud/utils"
+	"awsCloud/database/models"
+	"awsCloud/http/utils"
 
 	"github.com/gin-gonic/gin"
 )
