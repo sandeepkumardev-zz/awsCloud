@@ -26,7 +26,7 @@ func VerifyUser(user *models.User) (res Response, status int) {
 
 	token, err := utils.CreateToken(user.Username, fmt.Sprintf("%v", item["id"]))
 	if err != nil {
-		return Response{Message: "Something went wrong!", Data: nil, Success: false}, 500
+		return Response{Message: "Something went wrong!", Data: nil, Success: false}, 200
 	}
 	// calculate time for expire token
 	AtExpiresTime := time.Unix(token.AtExpires, 0).String()
@@ -45,10 +45,10 @@ func CreateUser(user *models.User) (res Response, status int) {
 	// check if user exists
 	exists, err := repositry.FindItem(user)
 	if err != nil {
-		return Response{Success: false, Message: err.Error(), Data: nil}, 500
+		return Response{Success: false, Message: err.Error(), Data: nil}, 200
 	}
 	if !exists {
-		return Response{Success: false, Message: "User already exists!", Data: nil}, 500
+		return Response{Success: false, Message: "User already exists!", Data: nil}, 200
 	}
 
 	// generate new user id
@@ -56,7 +56,7 @@ func CreateUser(user *models.User) (res Response, status int) {
 	// hash password
 	hash, hashErr := bcrypt.GenerateFromPassword([]byte(user.Password), 12)
 	if hashErr != nil {
-		return Response{Success: false, Message: "Something went wrong!", Data: nil}, 500
+		return Response{Success: false, Message: "Something went wrong!", Data: nil}, 200
 	}
 
 	// assign id & hash password
