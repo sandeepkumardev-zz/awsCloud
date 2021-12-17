@@ -4,6 +4,7 @@ import (
 	"awsCloud/database/models"
 	"awsCloud/http/repositry"
 	"awsCloud/http/utils"
+	"awsCloud/http/validator"
 	"fmt"
 	"strings"
 	"time"
@@ -15,6 +16,11 @@ import (
 type Response models.Response
 
 func VerifyUser(user *models.User) (res Response, status int) {
+	vErr := validator.SigninValidator(user)
+	if vErr != nil {
+		return Response{Success: false, Message: vErr.Error(), Data: nil}, 400
+	}
+
 	item, err := repositry.GetItem(user)
 	if err != nil {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
