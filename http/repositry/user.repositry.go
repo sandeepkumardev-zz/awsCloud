@@ -12,7 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 )
 
-func GetItem(user *models.User) (res map[string]interface{}, err error) {
+func GetItem(username string) (res map[string]interface{}, err error) {
 	var resp []map[string]interface{}
 
 	out, err := config.DB_client.Scan(context.TODO(), &dynamodb.ScanInput{
@@ -28,24 +28,24 @@ func GetItem(user *models.User) (res map[string]interface{}, err error) {
 	}
 
 	for _, item := range resp {
-		if item["username"] == user.Username {
+		if item["username"] == username {
 			return item, nil
 		}
 	}
 	return nil, fmt.Errorf("user not found")
 }
 
-func FindItem(user *models.User) (bool, error) {
-	_, err := GetItem(user)
+func FindItem(username string) (bool, error) {
+	_, err := GetItem(username)
 	if err != nil {
 		switch {
 		case err.Error() == "user not found":
-			return true, nil
+			return false, nil
 		default:
 			return false, err
 		}
 	}
-	return false, err
+	return true, err
 }
 
 func PutItem(user *models.User) error {

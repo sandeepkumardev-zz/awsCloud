@@ -1,9 +1,15 @@
 package models
 
+type SignInUser struct {
+	Username string `dynamodbav:"username" validate:"required"`
+	Password string `dynamodbav:"password" validate:"required"`
+}
+
 type User struct {
-	Id       string `dynamodbav:"id"`
-	Username string `dynamodbav:"username" validate:"required,username,isvalid"`
-	Password string `dynamodbav:"password" validate:"required,passwrd"`
+	Id          string `dynamodbav:"id"`
+	Username    string `dynamodbav:"username" validate:"required,username,isValid"`
+	Password    string `dynamodbav:"password" validate:"required,password"`
+	PhoneNumber string `dynamodbav:"phone_number" validate:"required,phone,isNum"`
 }
 
 type Response struct {

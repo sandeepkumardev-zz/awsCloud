@@ -13,10 +13,11 @@ import (
 	en_translations "gopkg.in/go-playground/validator.v9/translations/en"
 )
 
-func SigninValidator(user *models.User) error {
+func SignUpValidator(user *models.User) error {
 	// remove spaces
 	user.Username = strings.TrimSpace(user.Username)
 	user.Password = strings.TrimSpace(user.Password)
+	user.PhoneNumber = strings.TrimSpace(user.PhoneNumber)
 
 	// validator translator
 	translator := en.New()
@@ -41,13 +42,13 @@ func SigninValidator(user *models.User) error {
 
 	// validate the username field
 	// first it will validate that username contains only letters & numbers
-	_ = v.RegisterTranslation("isvalid", trans, func(ut ut.Translator) error {
-		return ut.Add("isvalid", "{0} contains only characters & numbers.", true)
+	_ = v.RegisterTranslation("isValid", trans, func(ut ut.Translator) error {
+		return ut.Add("isvalid", "{0} should contains only letters & numbers.", true)
 	}, func(ut ut.Translator, fe validator.FieldError) string {
 		t, _ := ut.T("isvalid", fe.Field())
 		return t
 	})
-	_ = v.RegisterValidation("isvalid", func(fl validator.FieldLevel) bool {
+	_ = v.RegisterValidation("isValid", func(fl validator.FieldLevel) bool {
 		var IsLetter = regexp.MustCompile(`^[a-zA-Z0-9]+$`).MatchString
 		return IsLetter(fl.Field().String())
 	})
@@ -69,13 +70,13 @@ func SigninValidator(user *models.User) error {
 	})
 
 	// validate the password field
-	_ = v.RegisterTranslation("passwrd", trans, func(ut ut.Translator) error {
+	_ = v.RegisterTranslation("password", trans, func(ut ut.Translator) error {
 		return ut.Add("passwrd", "{0} length must be between 6 to 12.", true)
 	}, func(ut ut.Translator, fe validator.FieldError) string {
 		t, _ := ut.T("passwrd", fe.Field())
 		return t
 	})
-	_ = v.RegisterValidation("passwrd", func(fl validator.FieldLevel) bool {
+	_ = v.RegisterValidation("password", func(fl validator.FieldLevel) bool {
 		if len(fl.Field().String()) < 6 {
 			return false
 		} else if len(fl.Field().String()) > 12 {
@@ -83,6 +84,28 @@ func SigninValidator(user *models.User) error {
 		} else {
 			return true
 		}
+	})
+
+	// validate the phone number field
+	_ = v.RegisterTranslation("phone", trans, func(ut ut.Translator) error {
+		return ut.Add("phone", "{0} length must be 10.", true)
+	}, func(ut ut.Translator, fe validator.FieldError) string {
+		t, _ := ut.T("phone", fe.Field())
+		return t
+	})
+	_ = v.RegisterValidation("phone", func(fl validator.FieldLevel) bool {
+		return len(fl.Field().String()) == 10
+	})
+	// now it will validate that phone number contains only numbers
+	_ = v.RegisterTranslation("isNum", trans, func(ut ut.Translator) error {
+		return ut.Add("isNum", "{0} should contains only numbers.", true)
+	}, func(ut ut.Translator, fe validator.FieldError) string {
+		t, _ := ut.T("isNum", fe.Field())
+		return t
+	})
+	_ = v.RegisterValidation("isNum", func(fl validator.FieldLevel) bool {
+		var IsLetter = regexp.MustCompile(`^[0-9]+$`).MatchString
+		return IsLetter(fl.Field().String())
 	})
 
 	err := v.Struct(user)

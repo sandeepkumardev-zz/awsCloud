@@ -15,13 +15,13 @@ import (
 
 type Response models.Response
 
-func VerifyUser(user *models.User) (res Response, status int) {
-	vErr := validator.SigninValidator(user)
+func VerifyUser(user *models.SignInUser) (res Response, status int) {
+	vErr := validator.SignInValidator(user)
 	if vErr != nil {
 		return Response{Success: false, Message: vErr.Error(), Data: nil}, 400
 	}
 
-	item, err := repositry.GetItem(user)
+	item, err := repositry.GetItem(user.Username)
 	if err != nil {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
@@ -46,12 +46,17 @@ func VerifyUser(user *models.User) (res Response, status int) {
 }
 
 func CreateUser(user *models.User) (res Response, status int) {
+	vErr := validator.SignUpValidator(user)
+	if vErr != nil {
+		return Response{Success: false, Message: vErr.Error(), Data: nil}, 400
+	}
+
 	// check if user exists
-	exists, err := repositry.FindItem(user)
+	exists, err := repositry.FindItem(user.Username)
 	if err != nil {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 200
 	}
-	if !exists {
+	if exists {
 		return Response{Success: false, Message: "User already exists!", Data: nil}, 200
 	}
 
