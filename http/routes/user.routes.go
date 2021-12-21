@@ -9,5 +9,5 @@ import (
 func userRoutes(router *gin.RouterGroup) {
 	router.POST("signin", ctrl.SignIn)
 	router.POST("signup", ctrl.SignUp)
-	router.POST("refresh", ctrl.RefreshToken)
+	router.POST("refreshtoken", ctrl.RefreshToken)
 }

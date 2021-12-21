@@ -19,8 +19,6 @@ import (
 // @host localhost:3000
 // @BasePath /api/v1
 
-// var addr = flag.String("addr", ":8080", "http service address")
-
 func main() {
 	fmt.Println("AWS cloud storage ...")
 
