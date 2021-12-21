@@ -1,0 +1,123 @@
+basePath: /api/v1
+definitions:
+  models.SignInUser:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  models.User:
+    properties:
+      id:
+        type: string
+      password:
+        type: string
+      phoneNumber:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - phoneNumber
+    - username
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: sandeepk@gmail.com
+    name: Sandeep kumar
+  description: A service where users can register and store there files.
+  termsOfService: http://swagger.io/terms/
+  title: AWS Wallet API Documentation.
+  version: 1.0.0
+paths:
+  /items:
+    get:
+      consumes:
+      - application/json
+      description: You need to signedIn and give a Token in headers then "Items List"
+        will execute.
+      produces:
+      - application/json
+      summary: Varify token & display the items list.
+      tags:
+      - Items List
+  /refreshToken:
+    post:
+      consumes:
+      - application/json
+      description: You need to signedIn and give a Token in headers then "Refresh
+        Token" will execute.
+      produces:
+      - application/json
+      summary: Varify token & create a new token.
+      tags:
+      - Refresh token
+  /signin:
+    post:
+      consumes:
+      - application/json
+      description: A registered user can sign in with their credentials.
+      parameters:
+      - description: Sign In User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignInUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SignInUser'
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+      summary: Sign In with credentials.
+      tags:
+      - Sign In
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: A new user can sign up with their username, password & phone number.
+      parameters:
+      - description: Sign Up User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: Sign Up with credentials.
+      tags:
+      - Sign Up
+  /upload:
+    post:
+      consumes:
+      - application/json
+      description: You need to signedIn and give a Token in headers then "Upload Item"
+        will execute.
+      produces:
+      - application/json
+      summary: Varify token & upload a new file.
+      tags:
+      - Upload Item
+swagger: "2.0"

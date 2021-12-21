@@ -8,6 +8,19 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// @title AWS Cloud API Documentation.
+// @version 1.0.0
+// @description A service where users can register and store there files.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name Sandeep kumar
+// @contact.email sandeepypb@gmail.com
+
+// @host localhost:3000
+// @BasePath /api/v1
+
+// var addr = flag.String("addr", ":8080", "http service address")
+
 func main() {
 	fmt.Println("AWS cloud storage ...")
 
