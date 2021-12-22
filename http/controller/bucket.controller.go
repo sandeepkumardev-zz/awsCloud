@@ -18,7 +18,7 @@ func CraeteBucket(ctx *gin.Context) {
 
 // Upload File controller
 // @Summary Varify token & upload a new file.
-// @Description You need to signedIn and give a Token in headers then "Upload Item" will execute.
+// @Description You need to signedIn and give a Token in headers then "Upload Item" will execute. The input id myFile will be handled by the MultipartForm function.
 // @Tags Upload Item
 // @Accept  json
 // @Produce  json
