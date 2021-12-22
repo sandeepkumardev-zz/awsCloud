@@ -3,7 +3,6 @@ package controller
 import (
 	"awsCloud/database/models"
 	"awsCloud/http/services"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -53,8 +52,6 @@ func SignUp(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnprocessableEntity, models.Response{Success: false, Message: "Invalid input provided", Data: nil})
 		return
 	}
-
-	fmt.Println(user)
 
 	res, status := services.CreateUser(&user)
 	if !res.Success {
