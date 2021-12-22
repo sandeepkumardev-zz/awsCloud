@@ -13,3 +13,8 @@ A cloud storage where users can register and upload any file.
 ```sh
 go run main.go
 ```
+
+## API Documentation
+```sh
+http://localhost:3000/swagger/index.html
+```
