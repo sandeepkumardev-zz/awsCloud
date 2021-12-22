@@ -5,7 +5,9 @@ import (
 	"awsCloud/http/repositry"
 	"awsCloud/http/utils"
 	"awsCloud/http/validator"
+	"awsCloud/http/varification"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -84,6 +86,11 @@ func CreateUser(user *models.User) (res Response, status int) {
 	err = repositry.PutItem(user)
 	if err != nil {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
+	}
+
+	isSend := varification.SendSMS(user.PhoneNumber, "Welcome to awsCloud services.")
+	if !isSend {
+		log.Println("Message failed to send - ", user.PhoneNumber)
 	}
 
 	return Response{Success: true, Message: "SignUp successful!", Data: nil}, 200
