@@ -25,17 +25,26 @@ func UploadItem(ctx *gin.Context) (res Response, status int) {
 	username := ctx.Request.Header.Get("username")
 	userId := ctx.Request.Header.Get("userId")
 
-	file, handler, fileErr := ctx.Request.FormFile("myFile")
-	if fileErr != nil {
-		return Response{Success: false, Message: fileErr.Error(), Data: nil}, 415
-	}
-	defer file.Close()
-
-	bucketName := utils.CreateBucketName(username, userId)
-	err := repositry.UploadObject(bucketName, file, handler.Filename)
-
+	form, err := ctx.MultipartForm()
 	if err != nil {
-		return Response{Success: false, Message: err.Error(), Data: nil}, 400
+		return Response{Success: false, Message: err.Error(), Data: nil}, 415
+	}
+	files := form.File["myFile"]
+
+	for _, file := range files {
+		f, fErr := file.Open()
+		if fErr != nil {
+			return Response{Success: false, Message: err.Error(), Data: nil}, 415
+		}
+		defer f.Close()
+
+		bucketName := utils.CreateBucketName(username, userId)
+		err := repositry.UploadObject(bucketName, f, file.Filename)
+
+		if err != nil {
+			return Response{Success: false, Message: err.Error(), Data: nil}, 400
+		}
+
 	}
 
 	return Response{Success: true, Message: "File upload successfully!", Data: nil}, 200
