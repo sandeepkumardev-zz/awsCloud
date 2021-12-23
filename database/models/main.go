@@ -27,8 +27,8 @@ type TokenDetails struct {
 }
 
 type OTP struct {
-	PhoneNumber string `json:"phone_number"`
-	OTP         string `json:"otp"`
+	Id  string `json:"id"`
+	OTP string `json:"otp"`
 }
 
 type Config struct {
