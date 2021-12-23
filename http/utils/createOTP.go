@@ -4,6 +4,8 @@ import (
 	"awsCloud/database/config"
 	"encoding/json"
 	"math/rand"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -14,8 +16,8 @@ func CreateOTP(id string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-
-	err = config.RedisClient.Set(id, json, 2*time.Minute).Err()
+	rdExTime, _ := strconv.Atoi(os.Getenv("REDIS_EXPIRATION_TIME"))
+	err = config.RedisClient.Set(id, json, time.Duration(rdExTime)*time.Minute).Err()
 	if err != nil {
 		return 0, err
 	}

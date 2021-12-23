@@ -4,11 +4,11 @@ import (
 	"awsCloud/database/models"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	// str2duration "github.com/xhit/go-str2duration/v2"
 )
 
 var td = &models.TokenDetails{}
@@ -16,9 +16,10 @@ var ACCESS_SECRET = os.Getenv("ACCESS_SECRET")
 var REFRESH_SECRET = os.Getenv("REFRESH_SECRET")
 
 func CreateToken(username string, id string) (*models.TokenDetails, error) {
-	// min, _ := str2duration.ParseDuration(os.Getenv("EXPIRE_ACCESS_TIME"))
-	td.AtExpires = time.Now().Add(time.Minute * 60).Unix()
-	td.RtExpires = time.Now().Add(time.Minute * 120).Unix()
+	exAccTime, _ := strconv.Atoi(os.Getenv("EXPIRE_ACCESS_TIME"))
+	exRefTime, _ := strconv.Atoi(os.Getenv("EXPIRE_REFRESH_TIME"))
+	td.AtExpires = time.Now().Add(time.Minute * time.Duration(exAccTime)).Unix()
+	td.RtExpires = time.Now().Add(time.Minute * time.Duration(exRefTime)).Unix()
 
 	var err error
 	//Creating Access Token
