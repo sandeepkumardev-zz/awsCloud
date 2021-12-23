@@ -5,7 +5,7 @@ import (
 	"awsCloud/http/repositry"
 	"awsCloud/http/utils"
 	"awsCloud/http/validator"
-	"awsCloud/http/varification"
+	verification "awsCloud/http/verification"
 	"log"
 	"os"
 	"strconv"
@@ -93,7 +93,7 @@ func CreateUser(user *models.User) (res Response, status int) {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
 
-	isSend := varification.SendSMS(user.PhoneNumber, "Welcome to awsCloud services. OTP - "+strconv.Itoa(otp))
+	isSend := verification.SendSMS(user.PhoneNumber, "Welcome to awsCloud services. OTP - "+strconv.Itoa(otp))
 	if !isSend {
 		log.Println("Message failed to send - ", user.PhoneNumber)
 	}
@@ -102,7 +102,7 @@ func CreateUser(user *models.User) (res Response, status int) {
 }
 
 func VerifyOTP(otp *models.OTP) (res Response, status int) {
-	err := varification.VerifyOTP(otp.Id, otp.OTP)
+	err := verification.VerifyOTP(otp.Id, otp.OTP)
 	if err != nil {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
