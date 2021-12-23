@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 
 	uuid "github.com/gofrs/uuid"
@@ -88,7 +89,12 @@ func CreateUser(user *models.User) (res Response, status int) {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
 
-	isSend := varification.SendSMS(user.PhoneNumber, "Welcome to awsCloud services.")
+	otp, err := utils.CreateOTP(user.Id)
+	if err != nil {
+		return Response{Success: false, Message: err.Error(), Data: nil}, 400
+	}
+
+	isSend := varification.SendSMS(user.PhoneNumber, "Welcome to awsCloud services. OTP - "+strconv.Itoa(otp))
 	if !isSend {
 		log.Println("Message failed to send - ", user.PhoneNumber)
 	}

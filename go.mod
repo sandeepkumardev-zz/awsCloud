@@ -99,6 +99,10 @@ require (
 )
 
 require (
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	gopkg.in/redis.v3 v3.6.4
 )
+
+require gopkg.in/bsm/ratelimit.v1 v1.0.0-20160220154919-db14e161995a // indirect

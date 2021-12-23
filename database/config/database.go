@@ -10,11 +10,13 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"gopkg.in/redis.v3"
 )
 
 var DB_client *dynamodb.Client
 var env = GetEnvVar()
 var S3session *s3.S3
+var RedisClient *redis.Client
 
 func ConnectionDB() (*dynamodb.Client, error) {
 	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(env.AWS_REGION))
@@ -42,6 +44,12 @@ func ConnectionDB() (*dynamodb.Client, error) {
 	} else {
 		fmt.Println("Table Size (bytes)", resp.Table.TableSizeBytes)
 	}
+
+	RedisClient = redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	})
 
 	return DB_client, nil
 }
