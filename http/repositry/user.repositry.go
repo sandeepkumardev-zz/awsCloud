@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
 func GetItem(username string) (res map[string]interface{}, err error) {
@@ -57,6 +58,21 @@ func PutItem(user *models.User) error {
 	_, dberr := config.DB_client.PutItem(context.TODO(), &dynamodb.PutItemInput{
 		TableName: aws.String(os.Getenv("TABLE_NAME")),
 		Item:      data,
+	})
+
+	return dberr
+}
+
+func UpadteItem(id string, attValue string) error {
+	_, dberr := config.DB_client.UpdateItem(context.TODO(), &dynamodb.UpdateItemInput{
+		TableName: aws.String(os.Getenv("TABLE_NAME")),
+		Key: map[string]types.AttributeValue{
+			"id": &types.AttributeValueMemberS{Value: id},
+		},
+		UpdateExpression: aws.String("set verified = :verified"),
+		ExpressionAttributeValues: map[string]types.AttributeValue{
+			":verified": &types.AttributeValueMemberS{Value: attValue},
+		},
 	})
 
 	return dberr

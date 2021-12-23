@@ -89,7 +89,7 @@ func CreateUser(user *models.User) (res Response, status int) {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
 
-	otp, err := utils.CreateOTP(user.PhoneNumber)
+	otp, err := utils.CreateOTP(user.Id)
 	if err != nil {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
@@ -99,13 +99,18 @@ func CreateUser(user *models.User) (res Response, status int) {
 		log.Println("Message failed to send - ", user.PhoneNumber)
 	}
 
-	return Response{Success: true, Message: "SignUp successful!", Data: nil}, 200
+	return Response{Success: true, Message: "SignUp successful!", Data: user}, 200
 }
 
 func VerifyOTP(otp *models.OTP) (res Response, status int) {
-	err := varification.VerifyOTP(otp.PhoneNumber, otp.OTP)
+	err := varification.VerifyOTP(otp.Id, otp.OTP)
 	if err != nil {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
+	}
+
+	dberr := repositry.UpadteItem(otp.Id, "true")
+	if dberr != nil {
+		return Response{Success: false, Message: dberr.Error(), Data: nil}, 400
 	}
 
 	return Response{Success: true, Message: "OTP varification successfully!", Data: nil}, 200
