@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func CreateOTP(phoneNumber string) (int, error) {
+func CreateOTP(id string) (int, error) {
 	num := rand.Intn(1000000)
 
 	json, err := json.Marshal(int(num))
@@ -15,7 +15,7 @@ func CreateOTP(phoneNumber string) (int, error) {
 		return 0, err
 	}
 
-	err = config.RedisClient.Set(phoneNumber, json, 5*time.Minute).Err()
+	err = config.RedisClient.Set(id, json, 2*time.Minute).Err()
 	if err != nil {
 		return 0, err
 	}
