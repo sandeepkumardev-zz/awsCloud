@@ -3,6 +3,7 @@ package services
 import (
 	"awsCloud/http/repositry"
 	"awsCloud/http/utils"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,6 +25,12 @@ func CreateBucket(ctx *gin.Context) (res Response, status int) {
 func UploadItem(ctx *gin.Context) (res Response, status int) {
 	username := ctx.Request.Header.Get("username")
 	userId := ctx.Request.Header.Get("userId")
+	verified := ctx.Request.Header.Get("verified")
+
+	boolValue, _ := strconv.ParseBool(verified)
+	if !boolValue {
+		return Response{Success: false, Message: "You are not authorized user.", Data: nil}, 400
+	}
 
 	form, err := ctx.MultipartForm()
 	if err != nil {

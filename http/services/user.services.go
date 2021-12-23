@@ -6,7 +6,6 @@ import (
 	"awsCloud/http/utils"
 	"awsCloud/http/validator"
 	"awsCloud/http/varification"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -29,11 +28,11 @@ func VerifyUser(user *models.SignInUser) (res Response, status int) {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
 
-	if err = bcrypt.CompareHashAndPassword([]byte(fmt.Sprintf("%v", item["password"])), []byte(user.Password)); err != nil {
+	if err = bcrypt.CompareHashAndPassword([]byte(item["password"].(string)), []byte(user.Password)); err != nil {
 		return Response{Success: false, Message: "Wrong password!", Data: nil}, 401
 	}
 
-	token, err := utils.CreateToken(user.Username, fmt.Sprintf("%v", item["id"]))
+	token, err := utils.CreateToken(user.Username, item["id"].(string), item["verified"].(string))
 	if err != nil {
 		return Response{Message: "Something went wrong!", Data: nil, Success: false}, 200
 	}
