@@ -10,6 +10,7 @@ type User struct {
 	Username    string `dynamodbav:"username" validate:"required,username,isValid"`
 	Password    string `dynamodbav:"password" validate:"required,password"`
 	PhoneNumber string `dynamodbav:"phone_number" validate:"required,phone,isNum"`
+	Verified    bool   `dynamodbav:"verified"`
 }
 
 type Response struct {
@@ -23,6 +24,11 @@ type TokenDetails struct {
 	RefreshToken string `json:"refresh_token"`
 	AtExpires    int64  `json:"at_expires"`
 	RtExpires    int64  `json:"rt_expires"`
+}
+
+type OTP struct {
+	PhoneNumber string `json:"phone_number"`
+	OTP         string `json:"otp"`
 }
 
 type Config struct {
