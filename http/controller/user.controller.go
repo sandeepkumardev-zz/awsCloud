@@ -72,3 +72,30 @@ func SignUp(ctx *gin.Context) {
 func RefreshToken(ctx *gin.Context) {
 
 }
+
+// Varify OTP controller
+// @Summary Varify OTP
+// @Description You need to provide a Token in body.
+// @Tags Varify OTP
+// @Accept  json
+// @Produce  json
+// @Param user body models.OTP true "Varify OTP"
+// @Success 200 {object} models.OTP
+// @Failure 400 {object} object
+// @Router /refreshToken [post]
+func VerifyOTP(ctx *gin.Context) {
+	var otp models.OTP
+
+	if credErr := ctx.ShouldBindJSON(&otp); credErr != nil {
+		ctx.JSON(http.StatusUnprocessableEntity, models.Response{Success: false, Message: "Invalid input provided", Data: nil})
+		return
+	}
+
+	res, status := services.VerifyOTP(&otp)
+	if !res.Success {
+		ctx.JSON(status, res)
+		return
+	}
+
+	ctx.JSON(status, res)
+}
