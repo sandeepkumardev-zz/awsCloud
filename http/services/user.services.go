@@ -89,7 +89,7 @@ func CreateUser(user *models.User) (res Response, status int) {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
 
-	otp, err := utils.CreateOTP(user.Id)
+	otp, err := utils.CreateOTP(user.PhoneNumber)
 	if err != nil {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
@@ -100,4 +100,13 @@ func CreateUser(user *models.User) (res Response, status int) {
 	}
 
 	return Response{Success: true, Message: "SignUp successful!", Data: nil}, 200
+}
+
+func VerifyOTP(otp *models.OTP) (res Response, status int) {
+	err := varification.VerifyOTP(otp.PhoneNumber, otp.OTP)
+	if err != nil {
+		return Response{Success: false, Message: err.Error(), Data: nil}, 400
+	}
+
+	return Response{Success: true, Message: "OTP varification successfully!", Data: nil}, 200
 }
