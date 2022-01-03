@@ -1,3 +1,5 @@
 *.env
 
 *.git-czrc
+dist/
+.goreleaser.yml
