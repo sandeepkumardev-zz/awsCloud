@@ -8,7 +8,6 @@ import (
 	verification "awsCloud/http/verification"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 
 	uuid "github.com/gofrs/uuid"
@@ -93,10 +92,12 @@ func CreateUser(user *models.User) (res Response, status int) {
 		return Response{Success: false, Message: err.Error(), Data: nil}, 400
 	}
 
-	isSend := verification.SendSMS(user.PhoneNumber, "Welcome to awsCloud services. OTP - "+strconv.Itoa(otp))
-	if !isSend {
-		log.Println("Message failed to send - ", user.PhoneNumber)
-	}
+	log.Println("OTP - ", otp)
+
+	// isSend := verification.SendSMS(user.PhoneNumber, "Welcome to awsCloud services. OTP - "+strconv.Itoa(otp))
+	// if !isSend {
+	// 	log.Println("Message failed to send - ", user.PhoneNumber)
+	// }
 
 	return Response{Success: true, Message: "SignUp successful!", Data: user}, 200
 }
